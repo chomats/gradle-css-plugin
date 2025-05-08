@@ -1,4 +1,4 @@
-# This plugin is no longer maintained!
+
 
 # Gradle CSS Plugin
 

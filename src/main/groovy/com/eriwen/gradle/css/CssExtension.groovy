@@ -2,12 +2,12 @@ package com.eriwen.gradle.css
 
 import com.eriwen.gradle.css.source.CssSourceSet
 import com.eriwen.gradle.css.source.internal.DefaultCssSourceSet
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.NamedDomainObjectFactory
 import org.gradle.api.Project
 import org.gradle.api.internal.file.FileResolver
 import org.gradle.internal.reflect.Instantiator
-import org.gradle.util.ConfigureUtil
 
 class CssExtension {
 
@@ -25,6 +25,10 @@ class CssExtension {
     }
 
     void source(Closure closure) {
-        ConfigureUtil.configure(closure, source)
+        source.configure(closure)
+    }
+
+    void source(Action<? super NamedDomainObjectContainer<CssSourceSet>> action) {
+        action.execute(source)
     }
 }

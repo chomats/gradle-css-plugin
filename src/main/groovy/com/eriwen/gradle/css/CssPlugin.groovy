@@ -29,7 +29,7 @@ class CssPlugin implements Plugin<Project> {
     private final FileResolver fileResolver;
 
     @Inject
-    public CssPlugin(Instantiator instantiator, FileResolver fileResolver) {
+    CssPlugin(Instantiator instantiator, FileResolver fileResolver) {
         this.instantiator = instantiator;
         this.fileResolver = fileResolver;
     }
@@ -43,12 +43,12 @@ class CssPlugin implements Plugin<Project> {
         applyTasks(project)
     }
 
-    void applyTasks(final Project project) {
-        project.task('minifyCss', type: MinifyCssTask, group: 'Build', description: 'Minify CSS using YUI Minifier') {}
-        project.task('combineCss', type: CombineCssTask, group: 'Build', description: 'Combine many CSS files into one') {}
-        project.task('gzipCss', type: GzipCssTask, group: 'Build', description: 'GZip a given CSS file') {}
-        project.task('csslint', type: CssLintTask, group: 'Verification', description: 'Analyze CSS sources with CSS Lint') {}
-        project.task('lesscss', type: LessTask, group: 'Build', description: 'Compiles LESS files into CSS')
+    static void applyTasks(final Project project) {
+        project.tasks.register('minifyCss', type: MinifyCssTask, group: 'Build', description: 'Minify CSS using YUI Minifier') {}
+        project.tasks.register('combineCss', type: CombineCssTask, group: 'Build', description: 'Combine many CSS files into one') {}
+        project.tasks.register('gzipCss', type: GzipCssTask, group: 'Build', description: 'GZip a given CSS file') {}
+        project.tasks.register('csslint', type: CssLintTask, group: 'Verification', description: 'Analyze CSS sources with CSS Lint') {}
+        project.tasks.register('lesscss', type: LessTask, group: 'Build', description: 'Compiles LESS files into CSS')
     }
 
     void configureDependencies(final Project project) {

@@ -28,7 +28,7 @@ class ResourceUtil {
      * @param resourcePath path to resource to extract
      * @return reference to extracted or existing file
      */
-    File extractFileToDirectory(final File targetDirectory, final String resourcePath) {
+    static File extractFileToDirectory(final File targetDirectory, final String resourcePath) {
         if (targetDirectory.exists() && !targetDirectory.isDirectory()) {
             throw new IllegalArgumentException("Target directory is a file!")
         } else if (!targetDirectory.exists()) {
