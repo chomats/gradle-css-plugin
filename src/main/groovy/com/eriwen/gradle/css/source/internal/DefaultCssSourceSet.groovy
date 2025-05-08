@@ -6,25 +6,23 @@ import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.SourceDirectorySet
-import org.gradle.api.internal.file.DefaultSourceDirectorySet
 import org.gradle.api.internal.file.FileResolver
-import org.gradle.internal.reflect.Instantiator
+import org.gradle.api.model.ObjectFactory
+import org.gradle.internal.reflect.Instantiator 
 
 class DefaultCssSourceSet implements CssSourceSet {
 
     private final String name
     private final String displayName
-    private final DefaultSourceDirectorySet css
+    private final SourceDirectorySet css
     private final CssProcessingChain processing
     private final FileCollection processed
 
     DefaultCssSourceSet(String name, Project project, Instantiator instantiator, FileResolver fileResolver) {
         this.name = name
         this.displayName = name
-        Class fileTreeFactory = Class.forName("org.gradle.api.internal.file.collections.DefaultDirectoryFileTreeFactory")
-        def directoryFileTreeFactory = fileTreeFactory.getConstructor().newInstance()
-        this.css = new DefaultSourceDirectorySet(name, String.format("%s CSS source", displayName), fileResolver, directoryFileTreeFactory)
-
+        ObjectFactory objectFactory = project.getObjects();
+        css = objectFactory.sourceDirectorySet(name, String.format("%s CSS source", displayName));
         this.processing = instantiator.newInstance(DefaultCssProcessingChain, project, this, instantiator)
         this.processed = project.files({ processing.empty ? css : processing.last().outputs.files })
     }
